@@ -3,6 +3,7 @@ package tis.springcommunityproject.domain;
 import lombok.Builder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import tis.springcommunityproject.api.PostDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -35,13 +36,25 @@ public class PostEntity {
 	protected PostEntity() {
 	}
 
-	public PostEntity(Long id, String title, String content, UserEntity user, LocalDateTime createAt, LocalDateTime updateAt) {
+	private PostEntity(String title, String content, UserEntity user) {
+		this(null, title, content, user, null, null);
+	}
+
+	private PostEntity(Long id, String title, String content, UserEntity user, LocalDateTime createAt, LocalDateTime updateAt) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.user = user;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
+	}
+
+	public static PostEntity of(Long id, String title, String content, UserEntity user, LocalDateTime createAt, LocalDateTime updateAt) {
+		return new PostEntity(id, title, content, user, createAt, updateAt);
+	}
+
+	public static PostEntity of(String title, String content, UserEntity user) {
+		return new PostEntity(title, content, user);
 	}
 
 	public Long getId() {

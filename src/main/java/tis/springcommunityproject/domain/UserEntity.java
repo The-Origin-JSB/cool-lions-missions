@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Users")
-@Builder
 public class UserEntity {
 
 	@Id
@@ -19,7 +18,7 @@ public class UserEntity {
 
 	private String name;
 
-	//TODO 등록일자와 수정일자는 공통으로 처리가 가능하다.
+	//TODO 등록일자와 수정일자는 공통으로 처리 가능하다.
 	@Column(updatable = false)
 	@CreatedDate
 	private LocalDateTime createAt;
@@ -31,11 +30,19 @@ public class UserEntity {
 	protected UserEntity() {
 	}
 
-	public UserEntity(Long id, String name, LocalDateTime createAt, LocalDateTime updateAt) {
+	private UserEntity(String name) {
+		this(null, name, null, null);
+	}
+
+	private UserEntity(Long id, String name, LocalDateTime createAt, LocalDateTime updateAt) {
 		this.id = id;
 		this.name = name;
 		this.createAt = createAt;
 		this.updateAt = updateAt;
+	}
+
+	public static UserEntity of(Long id, String name, LocalDateTime createAt, LocalDateTime updateAt) {
+		return new UserEntity(id, name, createAt, updateAt);
 	}
 
 	public Long getId() {

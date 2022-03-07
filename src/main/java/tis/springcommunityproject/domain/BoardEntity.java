@@ -21,10 +21,18 @@ public class BoardEntity {
 	protected BoardEntity() {
 	}
 
-	public BoardEntity(Long id, List<PostEntity> postList, String title) {
+	public BoardEntity(String title) {
+		this(null, null, title);
+	}
+
+	private BoardEntity(Long id, List<PostEntity> postList, String title) {
 		this.id = id;
 		this.postList = postList;
 		this.title = title;
+	}
+
+	public static BoardEntity of(Long id, List<PostEntity> postList, String title) {
+		return new BoardEntity(id, postList, title);
 	}
 
 	public Long getId() {
