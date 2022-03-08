@@ -1,7 +1,7 @@
 package tis.springcommunityproject.domain.shop;
 
 import tis.springcommunityproject.domain.UserEntity;
-import tis.springcommunityproject.domain.area.AreaEntity;
+import tis.springcommunityproject.domain.area.Area;
 
 import javax.persistence.*;
 
@@ -19,7 +19,7 @@ public class ShopEntity {
 	private UserEntity user;
 
 	@Embedded
-	private AreaEntity area;
+	private Area area;
 
 	@Enumerated
 	private Category category;
@@ -27,14 +27,14 @@ public class ShopEntity {
 	protected ShopEntity() {
 	}
 
-	private ShopEntity(Long id, UserEntity user, AreaEntity area, Category category) {
+	private ShopEntity(Long id, UserEntity user, Area area, Category category) {
 		this.id = id;
 		this.user = user;
 		this.area = area;
 		this.category = category;
 	}
 
-	public static ShopEntity of(Long id, UserEntity user, AreaEntity area, Category category) {
+	public static ShopEntity of(Long id, UserEntity user, Area area, Category category) {
 		return new ShopEntity(id, user, area, category);
 	}
 

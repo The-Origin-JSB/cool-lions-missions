@@ -22,11 +22,11 @@ public class CommunityController {
 	@PostMapping("/post")
 	public ApiResult<BoardPostDto> createPost(
 		@PathVariable Long boardId,
-		@ModelAttribute BoardPostDto post
+		@RequestBody BoardPostDto post
 	) {
 		return OK(
 			new BoardPostDto(
-				communityService.create(boardId, post.newPostEntity(), AUTH_ID)
+				communityService.create(boardId, post.newBoardPostEntity(), AUTH_ID)
 			)
 		);
 	}
@@ -47,10 +47,10 @@ public class CommunityController {
 	public ApiResult<BoardPostDto> updateOne(
 		@PathVariable Long boardId,
 		@PathVariable Long postId,
-		@ModelAttribute BoardPostDto post
+		@RequestBody BoardPostDto post
 	) {
 		return OK(new BoardPostDto(
-			communityService.updateOne(boardId, postId, post.newPostEntity(), AUTH_ID)
+			communityService.updateOne(boardId, postId, post.newBoardPostEntity(), AUTH_ID)
 		));
 	}
 

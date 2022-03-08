@@ -12,4 +12,12 @@ public class SiGunGu {
 	public SiGunGu(String siGunGu) {
 		this.siGunGu = siGunGu;
 	}
+
+	public String getSiGunGu() {
+		return siGunGu;
+	}
+
+	public void setSiGunGu(String siGunGu) {
+		this.siGunGu = siGunGu;
+	}
 }

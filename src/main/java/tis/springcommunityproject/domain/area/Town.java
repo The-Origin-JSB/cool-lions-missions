@@ -6,10 +6,17 @@ import javax.persistence.Embeddable;
 public class Town {
 	private String town;
 
+	protected Town() {}
+
 	public Town(String town) {
 		this.town = town;
 	}
 
-	protected Town() {
+	public String getTown() {
+		return town;
+	}
+
+	public void setTown(String town) {
+		this.town = town;
 	}
 }

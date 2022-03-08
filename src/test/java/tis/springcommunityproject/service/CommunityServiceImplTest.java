@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.UserEntity;
-import tis.springcommunityproject.repository.JpaPostRepository;
+import tis.springcommunityproject.repository.JpaBoardPostRepository;
 import tis.springcommunityproject.service.community.CommunityServiceImpl;
 import tis.springcommunityproject.service.member.MemberService;
 
@@ -33,7 +33,7 @@ class CommunityServiceImplTest {
 	public static final String UPDATE_TITLE = "update title";
 	public static final String UPDATE_CONTENT = "update content";
 	@Mock
-	private JpaPostRepository postRepository;
+	private JpaBoardPostRepository postRepository;
 
 	@Mock
 	private MemberService memberService;
@@ -42,7 +42,7 @@ class CommunityServiceImplTest {
 	private CommunityServiceImpl communityService;
 
 	UserEntity user;
-	PostEntity post;
+	BoardPostEntity post;
 
 	@BeforeEach
 	void setUp() {
@@ -60,7 +60,7 @@ class CommunityServiceImplTest {
 
 		PostEntity createPost = communityService.create(BOARD_ID, post, AUTH_ID);
 
-		assertThat(createPost).isEqualTo(post);
+		assertThat(createPost).isInstanceOf(BoardPostEntity.class);
 	}
 
 	//포스트 조회
@@ -72,7 +72,7 @@ class CommunityServiceImplTest {
 
 		PostEntity findPost = communityService.findOne(BOARD_ID, POST_ID, AUTH_ID);
 
-		assertThat(findPost).isEqualTo(post);
+		assertThat(findPost).isInstanceOf(BoardPostEntity.class);
 	}
 
 	//포스트 삭제
@@ -91,7 +91,7 @@ class CommunityServiceImplTest {
 	@Order(4)
 	@DisplayName("포스트 업데이트 테스트")
 	void updatePostTest() {
-		PostEntity postRequest = new BoardPostEntity(UPDATE_TITLE, UPDATE_CONTENT);
+		BoardPostEntity postRequest = BoardPostEntity.of(UPDATE_TITLE, UPDATE_CONTENT);
 //			PostEntity.of(null, UPDATE_TITLE, UPDATE_CONTENT, user, null);
 		when(postRepository.findById(any())).thenReturn(Optional.ofNullable(post));
 
@@ -109,11 +109,11 @@ class CommunityServiceImplTest {
 		post.updateContent(postRequest.getContent());
 	}
 
-	private PostEntity getPost(UserEntity user) {
-		return PostEntity.of(POST_ID, TEST_TITLE, TEST_CONTENT, user, null);
+	private BoardPostEntity getPost(UserEntity user) {
+		return BoardPostEntity.of(POST_ID, TEST_TITLE, TEST_CONTENT, user);
 	}
 
 	private UserEntity getUser() {
-		return UserEntity.of(USER_ID, USER_NAME, null, null);
+		return UserEntity.of(USER_ID, USER_NAME, null);
 	}
 }

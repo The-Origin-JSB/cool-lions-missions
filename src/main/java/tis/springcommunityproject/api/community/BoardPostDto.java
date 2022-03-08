@@ -1,7 +1,8 @@
 package tis.springcommunityproject.api.community;
 
-import tis.springcommunityproject.api.UserDto;
+import tis.springcommunityproject.api.member.UserDto;
 import tis.springcommunityproject.domain.PostEntity;
+import tis.springcommunityproject.domain.community.BoardPostEntity;
 
 import java.time.LocalDateTime;
 
@@ -17,19 +18,11 @@ public class BoardPostDto {
 
 	private LocalDateTime updateAt;
 
-	public BoardPostDto() {
+	protected BoardPostDto() {
 	}
 
 	public BoardPostDto(PostEntity source) {
-		this(source.getTitle(), source.getContent(), new UserDto(source.getUser()), source.getCreateAt(), source.getUpdateAt());
-	}
-
-	public BoardPostDto(String title, String content, UserDto user, LocalDateTime createAt, LocalDateTime updateAt) {
-		this.title = title;
-		this.content = content;
-		this.user = user;
-		this.createAt = createAt;
-		this.updateAt = updateAt;
+		this(source.getTitle(), source.getContent(), new UserDto(source.getUser()), source.getDate().getCreateAt(), source.getDate().getUpdateAt());
 	}
 
 	public BoardPostDto(String title, String content) {
@@ -37,8 +30,16 @@ public class BoardPostDto {
 		this.content = content;
 	}
 
-	public PostEntity newPostEntity() {
-		return PostEntity.of(title, content);
+	private BoardPostDto(String title, String content, UserDto user, LocalDateTime createAt, LocalDateTime updateAt) {
+		this.title = title;
+		this.content = content;
+		this.user = user;
+		this.createAt = createAt;
+		this.updateAt = updateAt;
+	}
+
+	public BoardPostEntity newBoardPostEntity() {
+		return BoardPostEntity.of(null,title, content, null);
 	}
 
 	public void setTitle(String title) {
@@ -68,4 +69,6 @@ public class BoardPostDto {
 	public LocalDateTime getUpdateAt() {
 		return updateAt;
 	}
+
+
 }
