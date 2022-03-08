@@ -1,5 +1,6 @@
 package tis.springcommunityproject.domain;
 
+
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;

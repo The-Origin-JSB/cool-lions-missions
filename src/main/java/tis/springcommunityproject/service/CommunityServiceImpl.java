@@ -12,26 +12,29 @@ import java.util.Objects;
 @Service
 public class CommunityServiceImpl implements CommunityService {
 
-	private final JpaBoardRepository boardRepository;
 	private final JpaPostRepository postRepository;
-	private final JpaUserRepository userRepository;
+	private final MemberService memberService;
 
-	public CommunityServiceImpl(JpaBoardRepository boardRepository, JpaPostRepository postRepository, JpaUserRepository userRepository) {
-		this.boardRepository = boardRepository;
+	public CommunityServiceImpl(JpaPostRepository postRepository, MemberService memberService) {
 		this.postRepository = postRepository;
-		this.userRepository = userRepository;
+		this.memberService = memberService;
 	}
 
 	@Override
 	@Transactional
 	public PostEntity create(Long boardId, PostEntity post, Long authId) {
+		post.updateUser(memberService.findOne(authId));
 		return postRepository.save(post);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public PostEntity findOne(Long boardId, Long postId, Long authId) {
-		return postRepository.findById(postId).orElseThrow(NotFoundDataException::new);
+		PostEntity findPost = postRepository.findById(postId).orElseThrow(NotFoundDataException::new);
+		if (!findPost.getUser().getId().equals(authId)) {
+			throw new IllegalArgumentException();
+		}
+		return findPost;
 	}
 
 	@Override
@@ -47,6 +50,7 @@ public class CommunityServiceImpl implements CommunityService {
 		if (!post.getContent().isEmpty()) {
 			findPost.updateTitle(post.getTitle());
 		}
+		findPost.updateAt();
 		PostEntity updatePost = postRepository.save(Objects.requireNonNull(findPost));
 		if (!updatePost.equals(findPost)) {
 			throw new IllegalArgumentException();

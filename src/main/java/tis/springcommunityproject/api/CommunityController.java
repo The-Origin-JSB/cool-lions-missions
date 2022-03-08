@@ -2,6 +2,8 @@ package tis.springcommunityproject.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import tis.springcommunityproject.domain.PostEntity;
+import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.service.CommunityService;
 
 import static tis.springcommunityproject.api.ApiResult.*;
@@ -11,14 +13,14 @@ import static tis.springcommunityproject.api.ApiResult.*;
 @RequestMapping("/community/{boardId}")
 public class CommunityController {
 
-	public static final long AUTH_ID = 0L;
+	public static final long AUTH_ID = 2L;
 	private final CommunityService communityService;
 
 	public CommunityController(CommunityService communityService) {
 		this.communityService = communityService;
 	}
 
-	@PostMapping("post")
+	@PostMapping("/post")
 	public ApiResult<PostDto> createPost(
 		@PathVariable Long boardId,
 		@ModelAttribute PostDto post
@@ -30,7 +32,7 @@ public class CommunityController {
 		);
 	}
 
-	@GetMapping("post/{postId}")
+	@GetMapping("/post/{postId}")
 	public ApiResult<PostDto> findOne(
 		@PathVariable Long boardId,
 		@PathVariable Long postId
@@ -42,7 +44,7 @@ public class CommunityController {
 		);
 	}
 
-	@PatchMapping("post/{postId}")
+	@PatchMapping("/post/{postId}")
 	public ApiResult<PostDto> updateOne(
 		@PathVariable Long boardId,
 		@PathVariable Long postId,
@@ -53,7 +55,7 @@ public class CommunityController {
 		));
 	}
 
-	@DeleteMapping("post/{postId}")
+	@DeleteMapping("/post/{postId}")
 	public ApiResult<String> delete(
 		@PathVariable Long boardId,
 		@PathVariable Long postId

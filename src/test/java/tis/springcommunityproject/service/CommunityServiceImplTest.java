@@ -11,9 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.UserEntity;
-import tis.springcommunityproject.repository.JpaBoardRepository;
 import tis.springcommunityproject.repository.JpaPostRepository;
-import tis.springcommunityproject.repository.JpaUserRepository;
 
 import java.util.Optional;
 
@@ -25,6 +23,7 @@ class CommunityServiceImplTest {
 	public static final long BOARD_ID = 1L;
 	public static final long POST_ID = 1L;
 	public static final long AUTH_ID = 1L;
+	public static final long USER_ID = 1L;
 	public static final String TEST_TITLE = "test title";
 	public static final String TEST_CONTENT = "test content";
 	public static final String USER_NAME = "user";
@@ -34,10 +33,7 @@ class CommunityServiceImplTest {
 	private JpaPostRepository postRepository;
 
 	@Mock
-	private JpaUserRepository userRepository;
-
-	@Mock
-	private JpaBoardRepository boardRepository;
+	private MemberService memberService;
 
 	@InjectMocks
 	private CommunityServiceImpl communityService;
@@ -56,6 +52,7 @@ class CommunityServiceImplTest {
 	@Order(1)
 	@DisplayName("포스트 생성 테스트")
 	void createPostTest() {
+		when(memberService.findOne(any())).thenReturn(user);
 		when(postRepository.save(ArgumentMatchers.any())).thenReturn(post);
 
 		PostEntity createPost = communityService.create(BOARD_ID, post, AUTH_ID);
@@ -80,6 +77,7 @@ class CommunityServiceImplTest {
 	@Order(3)
 	@DisplayName("포스트 삭제 테스트")
 	void deletePostTest() {
+		when(postRepository.findById(any())).thenReturn(Optional.ofNullable(post));
 		doNothing().when(postRepository).deleteById(any());
 		communityService.deleteOne(BOARD_ID, POST_ID, AUTH_ID);
 	}
@@ -90,7 +88,7 @@ class CommunityServiceImplTest {
 	@Order(4)
 	@DisplayName("포스트 업데이트 테스트")
 	void updatePostTest() {
-		PostEntity postRequest = PostEntity.of(null, UPDATE_TITLE, UPDATE_CONTENT, user, null, null);
+		PostEntity postRequest = PostEntity.of(null, UPDATE_TITLE, UPDATE_CONTENT, user, null);
 		when(postRepository.findById(any())).thenReturn(Optional.ofNullable(post));
 
 		updatePost(postRequest);
@@ -108,10 +106,10 @@ class CommunityServiceImplTest {
 	}
 
 	private PostEntity getPost(UserEntity user) {
-		return PostEntity.of(TEST_TITLE, TEST_CONTENT, user);
+		return PostEntity.of(POST_ID, TEST_TITLE, TEST_CONTENT, user, null);
 	}
 
 	private UserEntity getUser() {
-		return UserEntity.of(null, USER_NAME, null, null);
+		return UserEntity.of(USER_ID, USER_NAME, null);
 	}
 }
