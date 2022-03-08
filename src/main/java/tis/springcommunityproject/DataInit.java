@@ -8,6 +8,8 @@ import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.JpaBoardRepository;
 import tis.springcommunityproject.repository.JpaPostRepository;
 import tis.springcommunityproject.repository.JpaUserRepository;
+import tis.springcommunityproject.service.CommunityService;
+import tis.springcommunityproject.service.MemberService;
 
 import javax.annotation.PostConstruct;
 
@@ -15,16 +17,16 @@ import javax.annotation.PostConstruct;
 @Component
 public class DataInit {
 
-	public static final long AUTH_ID = 2L;
+	public static long AUTH_ID = 2L;
 
 	private final JpaBoardRepository boardRepository;
-	private final JpaPostRepository postRepository;
-	private final JpaUserRepository userRepository;
+	private final CommunityService communityService;
+	private final MemberService memberService;
 
-	public DataInit(JpaBoardRepository boardRepository, JpaPostRepository postRepository, JpaUserRepository userRepository) {
+	public DataInit(JpaBoardRepository boardRepository, CommunityService communityService, MemberService memberService) {
 		this.boardRepository = boardRepository;
-		this.postRepository = postRepository;
-		this.userRepository = userRepository;
+		this.communityService = communityService;
+		this.memberService = memberService;
 	}
 
 	@PostConstruct
@@ -33,15 +35,12 @@ public class DataInit {
 		BoardEntity boardEntity = boardRepository.save(board);
 		log.info("creaete boardEntity {}{}", boardEntity.getId(), boardEntity.getTitle());
 
-
-
 		UserEntity user = UserEntity.of(null, "name", null);
-		UserEntity userEntity = userRepository.save(user);
-		log.info("creaete userEntity {}{}", userEntity.getId(), userEntity.getName());
-
+		UserEntity userEntity = memberService.join(user);
+		log.info("creaete userEntity {}{}", userEntity, userEntity.getName());
 
 		PostEntity post = PostEntity.of("test title", "test content");
-		PostEntity postEntity = postRepository.save(post);
+		PostEntity postEntity = communityService.create(board.getId(), post, AUTH_ID);
 		log.info("creaete postEntity {}{}", postEntity.getId(), postEntity.getTitle());
 
 	}

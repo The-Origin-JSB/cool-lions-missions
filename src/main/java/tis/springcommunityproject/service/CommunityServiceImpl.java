@@ -3,9 +3,7 @@ package tis.springcommunityproject.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tis.springcommunityproject.domain.PostEntity;
-import tis.springcommunityproject.repository.JpaBoardRepository;
 import tis.springcommunityproject.repository.JpaPostRepository;
-import tis.springcommunityproject.repository.JpaUserRepository;
 
 import java.util.Objects;
 
@@ -40,14 +38,15 @@ public class CommunityServiceImpl implements CommunityService {
 	@Override
 	@Transactional
 	public PostEntity updateOne(Long boardId, Long postId, PostEntity post, Long authId) {
-		if (!post.getUser().getId().equals(authId)) {
+		PostEntity findPost = findOne(boardId, postId, authId);
+
+		if (!findPost.getUser().getId().equals(authId)) {
 			throw new AuthenticationException();
 		}
-		PostEntity findPost = findOne(boardId, postId, authId);
-		if (!post.getContent().isEmpty()) {
+		if (validateStringCheck(post.getContent(), findPost.getContent())) {
 			findPost.updateContent(post.getContent());
 		}
-		if (!post.getContent().isEmpty()) {
+		if (validateStringCheck(post.getTitle(), findPost.getTitle())) {
 			findPost.updateTitle(post.getTitle());
 		}
 		findPost.updateAt();
@@ -56,6 +55,10 @@ public class CommunityServiceImpl implements CommunityService {
 			throw new IllegalArgumentException();
 		}
 		return findPost;
+	}
+
+	private boolean validateStringCheck(String postString, String findPostString) {
+		return !postString.isEmpty() || !postString.equals(findPostString);
 	}
 
 	@Override
