@@ -9,9 +9,12 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import tis.springcommunityproject.domain.BoardPostEntity;
 import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.JpaPostRepository;
+import tis.springcommunityproject.service.community.CommunityServiceImpl;
+import tis.springcommunityproject.service.member.MemberService;
 
 import java.util.Optional;
 
@@ -88,7 +91,8 @@ class CommunityServiceImplTest {
 	@Order(4)
 	@DisplayName("포스트 업데이트 테스트")
 	void updatePostTest() {
-		PostEntity postRequest = PostEntity.of(null, UPDATE_TITLE, UPDATE_CONTENT, user, null);
+		PostEntity postRequest = new BoardPostEntity(UPDATE_TITLE, UPDATE_CONTENT);
+//			PostEntity.of(null, UPDATE_TITLE, UPDATE_CONTENT, user, null);
 		when(postRepository.findById(any())).thenReturn(Optional.ofNullable(post));
 
 		updatePost(postRequest);
@@ -110,6 +114,6 @@ class CommunityServiceImplTest {
 	}
 
 	private UserEntity getUser() {
-		return UserEntity.of(USER_ID, USER_NAME, null);
+		return UserEntity.of(USER_ID, USER_NAME, null, null);
 	}
 }

@@ -1,5 +1,6 @@
-package tis.springcommunityproject.service;
+package tis.springcommunityproject.service.community;
 
+import tis.springcommunityproject.domain.BoardPostEntity;
 import tis.springcommunityproject.domain.PostEntity;
 
 public interface CommunityService {

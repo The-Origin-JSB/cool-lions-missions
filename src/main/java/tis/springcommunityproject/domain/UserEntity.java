@@ -1,5 +1,7 @@
 package tis.springcommunityproject.domain;
 
+import tis.springcommunityproject.domain.area.AreaEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -7,7 +9,7 @@ import java.util.Objects;
 import static java.time.LocalDateTime.now;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 public class UserEntity {
 
 	@Id
@@ -24,22 +26,28 @@ public class UserEntity {
 	@Column(insertable = false)
 	private LocalDateTime updateAt;
 
+	@Embedded
+	private AreaEntity area;
+
 	protected UserEntity() {
 	}
 
 	private UserEntity(String name) {
-		this(null, name, null);
+		this(null, name, null, null);
 	}
 
-	private UserEntity(Long id, String name, LocalDateTime updateAt) {
+	private UserEntity(Long id, String name, LocalDateTime updateAt, AreaEntity area) {
+
+		// 유효성 검사
 		this.id = id;
 		this.name = name;
 		this.createAt = now();
 		this.updateAt = updateAt;
+		this.area = area;
 	}
 
-	public static UserEntity of(Long id, String name, LocalDateTime updateAt) {
-		return new UserEntity(id, name, updateAt);
+	public static UserEntity of(Long id, String name, LocalDateTime updateAt, AreaEntity area) {
+		return new UserEntity(id, name, updateAt, area);
 	}
 
 	public static UserEntity of( String name) {

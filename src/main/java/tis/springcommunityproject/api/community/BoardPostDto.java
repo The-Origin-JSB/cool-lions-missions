@@ -1,11 +1,12 @@
-package tis.springcommunityproject.api;
+package tis.springcommunityproject.api.community;
 
+import tis.springcommunityproject.api.UserDto;
 import tis.springcommunityproject.domain.PostEntity;
 
 import java.time.LocalDateTime;
 
 
-public class PostDto {
+public class BoardPostDto {
 	private String title;
 
 	private String content;
@@ -16,14 +17,14 @@ public class PostDto {
 
 	private LocalDateTime updateAt;
 
-	public PostDto() {
+	public BoardPostDto() {
 	}
 
-	public PostDto(PostEntity source) {
+	public BoardPostDto(PostEntity source) {
 		this(source.getTitle(), source.getContent(), new UserDto(source.getUser()), source.getCreateAt(), source.getUpdateAt());
 	}
 
-	public PostDto(String title, String content, UserDto user, LocalDateTime createAt, LocalDateTime updateAt) {
+	public BoardPostDto(String title, String content, UserDto user, LocalDateTime createAt, LocalDateTime updateAt) {
 		this.title = title;
 		this.content = content;
 		this.user = user;
@@ -31,7 +32,7 @@ public class PostDto {
 		this.updateAt = updateAt;
 	}
 
-	public PostDto(String title, String content) {
+	public BoardPostDto(String title, String content) {
 		this.title = title;
 		this.content = content;
 	}

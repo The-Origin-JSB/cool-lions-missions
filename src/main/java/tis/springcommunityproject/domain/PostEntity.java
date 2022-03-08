@@ -4,10 +4,11 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static java.time.LocalDateTime.*;
+import static java.time.LocalDateTime.now;
 
 @Entity
-@Table(name = "Posts")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "post_type")
 public class PostEntity {
 	@Id
 	@GeneratedValue
@@ -33,6 +34,9 @@ public class PostEntity {
 	}
 
 	private PostEntity(Long id, String title, String content, UserEntity user, LocalDateTime updateAt) {
+
+		// 유효성 검사
+
 		this.id = id;
 		this.title = title;
 		this.content = content;
@@ -93,7 +97,7 @@ public class PostEntity {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		PostEntity post = (PostEntity) o;
+		BoardPostEntity post = (BoardPostEntity) o;
 		return Objects.equals(getId(), post.getId()) && Objects.equals(getTitle(), post.getTitle()) && Objects.equals(getContent(), post.getContent()) && Objects.equals(getUser(), post.getUser()) && Objects.equals(getCreateAt(), post.getCreateAt()) && Objects.equals(getUpdateAt(), post.getUpdateAt());
 	}
 
