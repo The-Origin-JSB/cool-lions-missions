@@ -57,6 +57,14 @@ public class PostEntity {
 		return new PostEntity(title, content, user);
 	}
 
+	public void updateContent(String content) {
+		this.content = content;
+	}
+
+	public void updateTitle(String title) {
+		this.title = title;
+	}
+
 	public Long getId() {
 		return id;
 	}

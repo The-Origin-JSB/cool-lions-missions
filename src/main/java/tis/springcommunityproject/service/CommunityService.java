@@ -10,7 +10,7 @@ public interface CommunityService {
 	PostEntity findOne(Long boardId, Long postId, Long authId);
 
 	// update 포스트
-	PostEntity updateOne(Long boardId, Long postId, Long authId);
+	PostEntity updateOne(Long boardId, Long postId, PostEntity post, Long authId);
 
 	// delete 포스트
 	void deleteOne(Long boardId, Long postId, Long authId);
