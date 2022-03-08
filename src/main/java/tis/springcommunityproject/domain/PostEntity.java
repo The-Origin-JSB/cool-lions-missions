@@ -1,5 +1,7 @@
 package tis.springcommunityproject.domain;
 
+import tis.springcommunityproject.domain.community.BoardPostEntity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -23,7 +25,6 @@ public class PostEntity {
 	@JoinColumn(name = "user_id")
 	private UserEntity user;
 
-	//TODO 등록일자와 수정일자는 공통으로 처리가 가능하다.
 	@Column(updatable = false, nullable = false)
 	private LocalDateTime createAt;
 

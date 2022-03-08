@@ -1,6 +1,6 @@
 package tis.springcommunityproject.domain.shop;
 
-import tis.springcommunityproject.domain.BoardPostEntity;
+import tis.springcommunityproject.domain.community.BoardPostEntity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

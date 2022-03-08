@@ -2,8 +2,8 @@ package tis.springcommunityproject;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import tis.springcommunityproject.domain.BoardEntity;
-import tis.springcommunityproject.domain.BoardPostEntity;
+import tis.springcommunityproject.domain.community.BoardEntity;
+import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.JpaBoardRepository;

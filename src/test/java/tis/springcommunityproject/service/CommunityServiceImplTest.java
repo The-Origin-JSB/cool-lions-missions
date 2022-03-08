@@ -9,7 +9,7 @@ import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import tis.springcommunityproject.domain.BoardPostEntity;
+import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.repository.JpaPostRepository;

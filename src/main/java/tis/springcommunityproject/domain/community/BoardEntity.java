@@ -1,4 +1,4 @@
-package tis.springcommunityproject.domain;
+package tis.springcommunityproject.domain.community;
 
 
 import javax.persistence.*;

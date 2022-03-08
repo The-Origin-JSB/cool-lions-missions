@@ -1,5 +1,7 @@
-package tis.springcommunityproject.domain;
+package tis.springcommunityproject.domain.community;
 
+
+import tis.springcommunityproject.domain.PostEntity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -7,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @DiscriminatorValue("BOARD")
-public class BoardPostEntity extends PostEntity{
+public class BoardPostEntity extends PostEntity {
 
 	protected BoardPostEntity() {
 	}

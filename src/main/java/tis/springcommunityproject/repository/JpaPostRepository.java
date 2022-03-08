@@ -1,7 +1,6 @@
 package tis.springcommunityproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tis.springcommunityproject.domain.BoardPostEntity;
 import tis.springcommunityproject.domain.PostEntity;
 
 import java.util.Optional;
