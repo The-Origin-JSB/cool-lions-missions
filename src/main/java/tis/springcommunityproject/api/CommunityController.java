@@ -11,6 +11,7 @@ import static tis.springcommunityproject.api.ApiResult.*;
 @RequestMapping("/community/{boardId}")
 public class CommunityController {
 
+	public static final long AUTH_ID = 0L;
 	private final CommunityService communityService;
 
 	public CommunityController(CommunityService communityService) {
@@ -24,7 +25,7 @@ public class CommunityController {
 	) {
 		return OK(
 			new PostDto(
-				communityService.create(boardId, post.newPostEntity())
+				communityService.create(boardId, post.newPostEntity(), AUTH_ID)
 			)
 		);
 	}
@@ -36,7 +37,7 @@ public class CommunityController {
 	) {
 		return OK(
 			new PostDto(
-				communityService.findOne(boardId, postId, 0L)
+				communityService.findOne(boardId, postId, AUTH_ID)
 			)
 		);
 	}
@@ -48,7 +49,7 @@ public class CommunityController {
 		@ModelAttribute PostDto post
 	) {
 		return OK(new PostDto(
-			communityService.updateOne(boardId, postId, post.newPostEntity(), 0L)
+			communityService.updateOne(boardId, postId, post.newPostEntity(), AUTH_ID)
 		));
 	}
 
@@ -57,7 +58,7 @@ public class CommunityController {
 		@PathVariable Long boardId,
 		@PathVariable Long postId
 	) {
-		communityService.deleteOne(boardId,postId, 0L);
+		communityService.deleteOne(boardId, postId, AUTH_ID);
 		return OK("Delete OK");
 	}
 

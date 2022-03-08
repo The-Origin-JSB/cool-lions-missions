@@ -4,7 +4,7 @@ import tis.springcommunityproject.domain.PostEntity;
 
 public interface CommunityService {
 	// create 포스트
-	PostEntity create(Long boardId, PostEntity post);
+	PostEntity create(Long boardId, PostEntity post, Long authId);
 
 	// find 포스트
 	PostEntity findOne(Long boardId, Long postId, Long authId);

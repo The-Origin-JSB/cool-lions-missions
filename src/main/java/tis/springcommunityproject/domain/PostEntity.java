@@ -7,6 +7,7 @@ import tis.springcommunityproject.api.PostDto;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Posts")
@@ -87,5 +88,18 @@ public class PostEntity {
 
 	public LocalDateTime getUpdateAt() {
 		return updateAt;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		PostEntity post = (PostEntity) o;
+		return Objects.equals(getId(), post.getId()) && Objects.equals(getTitle(), post.getTitle()) && Objects.equals(getContent(), post.getContent()) && Objects.equals(getUser(), post.getUser()) && Objects.equals(getCreateAt(), post.getCreateAt()) && Objects.equals(getUpdateAt(), post.getUpdateAt());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), getTitle(), getContent(), getUser(), getCreateAt(), getUpdateAt());
 	}
 }

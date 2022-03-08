@@ -10,7 +10,7 @@ import tis.springcommunityproject.repository.JpaUserRepository;
 import java.util.Objects;
 
 @Service
-public class CommunityServiceImpl implements CommunityService{
+public class CommunityServiceImpl implements CommunityService {
 
 	private final JpaBoardRepository boardRepository;
 	private final JpaPostRepository postRepository;
@@ -24,7 +24,7 @@ public class CommunityServiceImpl implements CommunityService{
 
 	@Override
 	@Transactional
-	public PostEntity create(Long boardId, PostEntity post) {
+	public PostEntity create(Long boardId, PostEntity post, Long authId) {
 		return postRepository.save(post);
 	}
 
@@ -37,6 +37,9 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	@Transactional
 	public PostEntity updateOne(Long boardId, Long postId, PostEntity post, Long authId) {
+		if (!post.getUser().getId().equals(authId)) {
+			throw new AuthenticationException();
+		}
 		PostEntity findPost = findOne(boardId, postId, authId);
 		if (!post.getContent().isEmpty()) {
 			findPost.updateContent(post.getContent());
@@ -44,13 +47,21 @@ public class CommunityServiceImpl implements CommunityService{
 		if (!post.getContent().isEmpty()) {
 			findPost.updateTitle(post.getTitle());
 		}
-		postRepository.save(Objects.requireNonNull(findPost));
+		PostEntity updatePost = postRepository.save(Objects.requireNonNull(findPost));
+		if (!updatePost.equals(findPost)) {
+			throw new IllegalArgumentException();
+		}
 		return findPost;
 	}
 
 	@Override
 	@Transactional
 	public void deleteOne(Long boardId, Long postId, Long authId) {
+		PostEntity post = findOne(boardId, postId, authId);
+		if (!post.getUser().getId().equals(authId)) {
+			throw new AuthenticationException();
+		}
 		postRepository.deleteById(postId);
 	}
+
 }
