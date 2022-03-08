@@ -2,10 +2,9 @@ package tis.springcommunityproject.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import tis.springcommunityproject.domain.PostEntity;
-import tis.springcommunityproject.domain.UserEntity;
 import tis.springcommunityproject.service.CommunityService;
 
+import static tis.springcommunityproject.DataInit.AUTH_ID;
 import static tis.springcommunityproject.api.ApiResult.*;
 
 @Controller
@@ -13,7 +12,6 @@ import static tis.springcommunityproject.api.ApiResult.*;
 @RequestMapping("/community/{boardId}")
 public class CommunityController {
 
-	public static final long AUTH_ID = 2L;
 	private final CommunityService communityService;
 
 	public CommunityController(CommunityService communityService) {

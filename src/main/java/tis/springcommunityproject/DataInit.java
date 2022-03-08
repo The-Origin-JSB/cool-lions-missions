@@ -15,6 +15,8 @@ import javax.annotation.PostConstruct;
 @Component
 public class DataInit {
 
+	public static final long AUTH_ID = 2L;
+
 	private final JpaBoardRepository boardRepository;
 	private final JpaPostRepository postRepository;
 	private final JpaUserRepository userRepository;
