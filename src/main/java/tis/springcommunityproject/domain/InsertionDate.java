@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.time.LocalDateTime;
 
-import static java.time.LocalDateTime.*;
+import static java.time.LocalDateTime.now;
 
 @Embeddable
 public class InsertionDate {

@@ -1,6 +1,5 @@
 package tis.springcommunityproject.service.shop;
 
-import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.shop.ShopPostEntity;
 import tis.springcommunityproject.domain.shop.ShopReviewEntity;
 

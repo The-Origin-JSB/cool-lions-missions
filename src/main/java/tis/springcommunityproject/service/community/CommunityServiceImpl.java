@@ -2,12 +2,11 @@ package tis.springcommunityproject.service.community;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import tis.springcommunityproject.domain.PostEntity;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.repository.JpaBoardPostRepository;
 import tis.springcommunityproject.service.AuthenticationException;
-import tis.springcommunityproject.service.member.MemberService;
 import tis.springcommunityproject.service.NotFoundDataException;
+import tis.springcommunityproject.service.member.MemberService;
 
 import java.util.Objects;
 

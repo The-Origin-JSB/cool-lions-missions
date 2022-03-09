@@ -6,7 +6,6 @@ import tis.springcommunityproject.domain.UserEntity;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import java.time.LocalDateTime;
 
 @Entity
 @DiscriminatorValue("BOARD")

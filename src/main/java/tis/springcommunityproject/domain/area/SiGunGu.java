@@ -1,6 +1,6 @@
 package tis.springcommunityproject.domain.area;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 
 @Embeddable
 public class SiGunGu {

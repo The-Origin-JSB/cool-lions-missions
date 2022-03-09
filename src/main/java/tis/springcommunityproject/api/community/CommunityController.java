@@ -6,7 +6,7 @@ import tis.springcommunityproject.api.ApiResult;
 import tis.springcommunityproject.service.community.CommunityService;
 
 import static tis.springcommunityproject.DataInit.AUTH_ID;
-import static tis.springcommunityproject.api.ApiResult.*;
+import static tis.springcommunityproject.api.ApiResult.OK;
 
 @Controller
 @ResponseBody

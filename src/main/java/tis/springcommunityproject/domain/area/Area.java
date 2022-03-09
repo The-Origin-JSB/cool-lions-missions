@@ -1,6 +1,7 @@
 package tis.springcommunityproject.domain.area;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 
 @Embeddable
 public class Area {
