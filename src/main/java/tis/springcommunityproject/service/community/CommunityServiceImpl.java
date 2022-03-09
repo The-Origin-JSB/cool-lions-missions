@@ -2,10 +2,12 @@ package tis.springcommunityproject.service.community;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tis.springcommunityproject.domain.community.BoardEntity;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
 import tis.springcommunityproject.repository.JpaBoardPostRepository;
-import tis.springcommunityproject.service.AuthenticationException;
-import tis.springcommunityproject.service.NotFoundDataException;
+import tis.springcommunityproject.repository.JpaBoardRepository;
+import tis.springcommunityproject.error.AuthenticationException;
+import tis.springcommunityproject.error.NotFoundDataException;
 import tis.springcommunityproject.service.member.MemberService;
 
 import java.util.Objects;
@@ -14,11 +16,19 @@ import java.util.Objects;
 public class CommunityServiceImpl implements CommunityService {
 
 	private final JpaBoardPostRepository postRepository;
+	private final JpaBoardRepository boardRepository;
 	private final MemberService memberService;
 
-	public CommunityServiceImpl(JpaBoardPostRepository postRepository, MemberService memberService) {
+	public CommunityServiceImpl(JpaBoardPostRepository postRepository, JpaBoardRepository boardRepository, MemberService memberService) {
 		this.postRepository = postRepository;
+		this.boardRepository = boardRepository;
 		this.memberService = memberService;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public BoardEntity findBoardOne(Long boardId) {
+		return boardRepository.findById(boardId).orElseThrow(NotFoundDataException::new);
 	}
 
 	@Override

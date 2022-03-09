@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import tis.springcommunityproject.api.community.CommunityController;
+
+import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-//@WebMvcTest(CommunityController.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class CommunityControllerTest {
 
@@ -33,36 +35,21 @@ class CommunityControllerTest {
 	void createPost() throws Exception {
 		ResultActions result = mockMvc.perform(
 			post("/community/{boardId}/post", 1)
-				.accept(MediaType.APPLICATION_JSON)
-				.param("title", "test title")
-				.param("content", "test contents")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content("{\n" +
+					"        \"title\": \"test title board\",\n" +
+					"        \"content\": \"test content board\"\n" +
+									"}")
 		);
-//		result.andDo(print())
-//			.andExpect(status().isOk())
-//			.andExpect(handler().handlerType(CommunityController.class))
-//			.andExpect(handler().methodName("post"))
-//			.andExpect(jsonPath("$.success", is(true)))
-//			.andExpect(jsonPath("$.response.name", is("tester00")))
-//			.andExpect(jsonPath("$.response.email.address", is("test00@gmail.com")))
-//			.andExpect(jsonPath("$.response.loginCount").exists())
-//			.andExpect(jsonPath("$.response.loginCount").isNumber())
-//			.andExpect(jsonPath("$.response.createAt").exists())
-//		;
+		result.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(handler().handlerType(CommunityController.class))
+			.andExpect(handler().methodName("createPost"))
+			.andExpect(jsonPath("$.success", is(true)))
+			.andExpect(jsonPath("$.response.title", is("test title board")))
+			.andExpect(jsonPath("$.response.content", is("test content board")))
+			.andExpect(jsonPath("$.response.user").exists())
+			.andExpect(jsonPath("$.response.createAt").exists())
+		;
 	}
-//	@Test
-//	void findPost() throws Exception {
-//		ResultActions result = mockMvc.perform(
-//			get("/community/{boardId}/post/{postId}", 1L, 3L)
-//		);
-//		result.andDo(print())
-//			.andExpect(status().isOk())
-//			.andExpect(handler().handlerType(CommunityController.class))
-//			.andExpect(jsonPath("$.success", is(true)))
-//			.andExpect(jsonPath("$.response.name", is("tester00")))
-//			.andExpect(jsonPath("$.response.email.address", is("test00@gmail.com")))
-//			.andExpect(jsonPath("$.response.loginCount").exists())
-//			.andExpect(jsonPath("$.response.loginCount").isNumber())
-//			.andExpect(jsonPath("$.response.createAt").exists())
-//		;
-//	}
 }

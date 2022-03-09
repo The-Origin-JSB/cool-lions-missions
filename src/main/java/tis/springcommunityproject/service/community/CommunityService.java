@@ -1,5 +1,6 @@
 package tis.springcommunityproject.service.community;
 
+import tis.springcommunityproject.domain.community.BoardEntity;
 import tis.springcommunityproject.domain.community.BoardPostEntity;
 
 public interface CommunityService {
@@ -14,4 +15,6 @@ public interface CommunityService {
 
 	// delete 포스트
 	void deleteOne(Long boardId, Long postId, Long authId);
+
+	BoardEntity findBoardOne(Long boardId);
 }

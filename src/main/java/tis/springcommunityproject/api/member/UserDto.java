@@ -16,6 +16,8 @@ public class UserDto {
 	}
 
 	public UserDto(String name, Area area, InsertionDate date) {
+		//유효성 검사
+
 		this.name = name;
 		this.area = area;
 		this.date = date;

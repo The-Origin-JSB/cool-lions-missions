@@ -25,6 +25,8 @@ public class ShopPostDto {
 	}
 
 	public ShopPostDto(String title, String content, UserDto user, InsertionDate date, List<ShopReviewDto> shopReview) {
+		//유효성 검사
+
 		this.title = title;
 		this.content = content;
 		this.user = user;

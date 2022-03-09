@@ -67,8 +67,9 @@ public class ShopController {
 	@PostMapping("/post/{postId}/review")
 	public ApiResult<ShopReviewDto> addReview(
 		@PathVariable Long postId,
+		@PathVariable Long userId,
 		@RequestBody ShopReviewDto shopReview
-	) {
+		) {
 		return OK(
 			new ShopReviewDto(
 				shopService.createShopReview(postId, shopReview.newShopReviewEntity(), AUTH_ID)

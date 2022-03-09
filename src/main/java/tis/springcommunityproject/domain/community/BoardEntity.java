@@ -39,6 +39,10 @@ public class BoardEntity {
 		return new BoardEntity(id, postList, title);
 	}
 
+	public static BoardEntity of(String title) {
+		return new BoardEntity(null, null, title);
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -19,6 +19,17 @@ public class CommunityController {
 		this.communityService = communityService;
 	}
 
+	@GetMapping
+	public ApiResult<BoardDto> findBoard(
+		@PathVariable Long boardId
+	) {
+		return OK(
+			new BoardDto(
+				communityService.findBoardOne(boardId)
+			)
+		);
+	}
+
 	@PostMapping("/post")
 	public ApiResult<BoardPostDto> createPost(
 		@PathVariable Long boardId,

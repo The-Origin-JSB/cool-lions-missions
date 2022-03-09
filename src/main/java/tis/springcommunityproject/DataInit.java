@@ -18,11 +18,11 @@ import javax.annotation.PostConstruct;
 @Component
 public class DataInit {
 
-	public static final String SHOP = "shop";
-	public static final String TEST_TITLE = "test title ";
-	public static final String BOARD = "board";
-	public static final String TEST_CONTENT = "test content ";
 	public static final String NAME = "name";
+	public static final String SHOP = "shop";
+	public static final String BOARD = "board";
+	public static final String TEST_TITLE = "test title ";
+	public static final String TEST_CONTENT = "test content ";
 	public static long AUTH_ID = 2L;
 
 	private final JpaBoardRepository boardRepository;
@@ -40,10 +40,10 @@ public class DataInit {
 
 	@PostConstruct
 	public void inIt() {
-		BoardEntity board = BoardEntity.of(null, null, TEST_TITLE);
+		BoardEntity board = BoardEntity.of(TEST_TITLE);
 		BoardEntity boardEntity = boardRepository.save(board);
 
-		UserEntity user = UserEntity.of(null, NAME, null);
+		UserEntity user = UserEntity.of(NAME);
 		UserEntity userEntity = memberService.join(user);
 
 		BoardPostEntity boardPost = BoardPostEntity.of(TEST_TITLE + BOARD, TEST_CONTENT + BOARD);

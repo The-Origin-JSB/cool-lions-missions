@@ -10,6 +10,8 @@ public class ShopReviewDto {
 	}
 
 	public ShopReviewDto(String content) {
+		//유효성 검사
+
 		this.content = content;
 	}
 
