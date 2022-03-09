@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.week3.board.domain.BoardEntityTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-03-06T07:18:39" hostname="ByungHoui-MacBookPro.local" time="0.066">
+  <properties/>
+  <testcase name="change_name()" classname="com.example.week3.board.domain.BoardEntityTest" time="0.066"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
