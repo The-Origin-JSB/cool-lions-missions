@@ -1,45 +1,73 @@
-# 멋쟁이 사자처럼 미션 코드 리뷰
+# 프로젝트 라이언 3주차 Basic 미션
 
-## 미션 결과물 올리는 방법
+## Basic Mission
 
-### 브랜치 만들기
+### 요구사항
 
-1. 맞는 주차의 branch를 `checkout` 합니다.(3주차이면 `mission/3`)
-    ```shell
-    git checkout mission/3
+- 커뮤니티 사이트에 데이터베이스 추가
+    - `h2` 데이터베이스를 인메모리 방식으로 추가했습니다.
+- DTO를 기반으로 Entity를 만들어 관리해 봅시다.
+    - 게시판 서비스를 구성하기 위해 전송하기 위한 DTO, 값을 받기 위한 DTO를 생성했습니다.
+- `PostEntity`와`BoardEntity`를 만들어 봅시다.
+- `PosetEntity`와`BoardEntity`의 관계를 표현해 봅시다.
+    - 하나의 게시판에는 여러 개의 글이 작성될 수 있기 때문에 `BoardEntity` 와 `PostEntity` 는 일대다 관계입니다.
+- `@ManyToOne`,`@OneToMany`,`@JoinColumn`을 적절히 사용합시다.
+    - `BoardEntity`와 `PostEntity` 사이는 양방향을 이용하지 않고 단방향 매핑만을 사용했습니다. Board를 조회할 때, Post도 같이 조회하기 때문에 `BoardEntity`에서 `PostEntity`의 리스트를 가질 수 있도록 설계했습니다.
+    - `UserEntity`와 `PostEntity` 사이에도 마찬가지로 단방향 매핑만을 사용했습니다. `PostEntity`를 조회할 때, User의 정보가 필요하지만, 게시판에서 글을 보여주는 간단한 게시글에서는 `UserEntity`를 조회할 때, 사용자가 작성한 `PostEntity`의 리스트가 필요없다고 생각했기 때문입니다.
+- `PostEntity`의 작성자를 저장하기 위한`UserEntity`를 만들고, 마찬가지로 관계를 표현해 봅시다.
+    - 하나의 글에는 하나의 작성자만 존재하기 때문에 두 개의 관계는 일대일 관계입니다.
+
+### 세부 조건
+
+- `UserEntity`에 대한 CRUD를 작성합시다.
+
+    ```java
+    public interface JpaUserRepository extends JpaRepository<UserEntity, Long> {
+    	@Override
+    	<S extends UserEntity> S save(S entity);
+    
+    	@Override
+    	Optional<UserEntity> findById(Long aLong);
+    
+    	@Override
+    	boolean existsById(Long aLong);
+    
+    	@Override
+    	void deleteById(Long aLong);
+    }
     ```
-2. `checkout -b`를 이용해 새로운 branch를 만듦과 동시에 해당 브랜치로 이동합니다. (**`branch`가 `mission/3`로 checkout 된 상태에서 생성해주세요!**)
-    ```shell
-    git checkout -b mission/3_{자신의 GIT ID}
-    ```
-3. 방금 만든 브랜치를 원격 저장소에 push 합니다.
-    ```shell
-    git push origin mission/3_{자신의 GIT ID}
-    ```
-4. 실제로 미션을 수행할 브랜치를 만듭니다.(**`branch`가 `mission/3_{자신의 GIT ID}`로 checkout 된 상태에서 생성해주세요!**)
-    ```shell
-    git checkout -b mission/3_{자신의 GIT ID}_Done
-    ```
-5. 실제 작업용 브랜치를 push 합니다.
-    ```shell
-    git push origin mission/3_{자신의 GIT ID}_Done
-    ```
-6. 작업용 브랜치에서 미션을 수행한 후, `commit`과 `push`를 합니다. 
-7. 미션 구현이 완료되었다면 Pull Request를 생성합니다. 
-   - Pull Request 시 제목은 `[n주차 미션] git 이름` 으로 작성해 주세요!
-   - `base`는 `mission/3_{자신의 GIT ID}`로 설정해주세요.(**base를 master로 하면 안됩니다.**)
-   - `compare`는 `mission/3_{자신의 GIT ID}_Done`입니다.
-  
+
+- `Post`를 작성하는 단계에서,`User`의 정보를 어떻게 전달할지 고민해 봅시다.
+
+  인증에 성공한 사용자의 ID 값을 이용해 User의 정보를 찾고, 해당 User의 정보를 Post에 저장하는 방식을 채택했습니다.
+
+    ```java
+    @Override
+    @Transactional
+    public PostEntity create(Long boardId, PostEntity post, Long authId) {
+    	post.updateUser(memberService.findOne(authId));
+    	return postRepository.save(post);
+    }
    ```
-    base : mission/3_this-is-spear ← compare : mission/3_this-is-spear_Done
-   ```
 
-### Pull Request 생성하기
-Pull Request에서의 글은 구현한 기능에 대해 설명과 어던 의도로 설계했는지 작성해주세요 ☺
+# 프로젝트 라이언 3주차 Challenge 미션
 
-> Pull Request 시 제목은 `[n주차 미션] git 이름` 으로 작성해 주세요!
+## 요구사항
 
+- 목적을 가진 커뮤니티 사이트 만들기
+- 위치정보를 담기 위한`AreaEntity`를 만들어 봅시다.
+    1. ‘도, 광역시’, ‘시,군,구’, ‘동,면,읍’ 데이터를 따로 저장할 수 있도록 합시다.
+    2. ‘위도’, ‘경도’ 데이터를 저장할 수 있도록 합시다.
+- 사용자 정보를 담는`UserEntity`를 Basic Mission과 유사하게 만들되, 사용자를 두가지로 분류할 수 있도록 합시다.
+    1. 위에 만든`AreaEntity`에 대한 정보를 담을 수 있도록 합시다. 이 정보는 자신의 거주지를 담기 위한 정보입니다.
+    2. `UserEntity`는 사용자 하나를 나타내며, 일반 사용자 또는 상점 주인인지에 대한 분류가 되어야 합니다.
+- 특정`UserEntity`만 가질 수 있는`ShopEntity`를 작성합시다. 또, 해당`ShopEntity`가 취급하는 품목에 대한`Cateogory`를 어떻게 다룰지 생각하여 나타낼 수 있도록 합시다.
+    1. `ShopEntity`는 어디 지역의 상점인지에 대한 정보를 가지고 있어야 합니다.
+- 마지막으로`ShopEntity`에 대한 게시글인,`ShopPostEntity`와`ShopReviewEntity`를 작성해 봅시다.
+    1. `ShopReviewEntity`는 어떤 사용자든 작성할 수 있으나,`ShopPostEntity`는 해당`ShopEntity`에 대한 주인`UserEntity`만 작성할 수 있어야 합니다.
 
-### 다른 팀원들의 PR을 살피고 리뷰 남기기 
+## 세부 조건
 
-미션의 결과물을 올렸다면, 나보다 먼저 PR을 남긴 스터디원들의 코드를 리뷰해주세요!(칭찬도 좋습니다. ☺️)
+- 생성된 테이블의 실제 이름에는`Entity`라는 문구가 들어가지 않도록`@Table`어노테이션을 활용합시다.
+- 변동될 가능성이 있는 데이터와 변동될 가능성이 없는 데이터를 잘 구분하여,`Entity`작성 여부를 잘 판단합시다.
+- `Entity`를 먼저 구성하되, 시간이 남으면 CRUD까지 구성해 봅시다.
